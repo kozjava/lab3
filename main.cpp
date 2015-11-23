@@ -4,39 +4,53 @@
 #include<cstdio>
 using namespace std;
 
+class Question
+{
+private:
+	char* text;
+public:
+	void setQuestion(char buffer[50])
+	{
+		this->text = buffer;
+	}
+	void getQuestion()
+	{
+		cout << "Your Question is a : " << this->text << endl;
+	}
+};
+
 class Test
 {
-private : 
-	char question[25];
+private:
+	Question* quest;
+	char buffer[50];
 public:
+
+	Test(Question* quest) : quest(quest) {};
 	Test()
 	{
 		cout << "Constructor : Test " << endl;
 	}
 	~Test()
 	{
-		cout << "Destructor" << endl;
+		cout << "Destructor : Test" << endl;
 	}
-	void print(char buffer[50]) const
+	void addquestion(char buffer[50])
 	{
-		for (int i = 0; i <1; i++)
-		{
-			cout << "Question(Test) : "; puts(buffer);
-			cout << endl;
-		}
+		quest->setQuestion(buffer);
 	}
-	void set(char buffer[25])
+	void getquestion()
 	{
-		for (int i = 0; i <1; i++)
-		{
-			question[i] = buffer[i];
-		}
+		quest->getQuestion();
 	}
 };
 class Exam : Test
 {
-private: char QQ[25];
+private:
+	Question* qu;
+	char buffer[50];
 public:
+	Exam(Question* qu) : qu(qu) {};
 	Exam()
 	{
 		cout << "Constructor : Exam" << endl;
@@ -45,62 +59,67 @@ public:
 	{
 		cout << "Destructor : Exam" << endl;
 	}
-	void print(char buffer[50])
+	void addQuestionExam(char buffer[50])
 	{
-		for (int i = 0; i <1; i++)
-		{
-			cout << "Question(Exam) : "; puts(buffer);
-			cout << endl;
-		}
+		qu->setQuestion(buffer);
 	}
-	void set(char buffer[50])
+	void getQuestionExam()
 	{
-		for (int i = 0; i <1; i++)
-		{
-			QQ[i] = buffer[i];
-		}
+		qu->getQuestion();
 	}
 };
-
-class Question
+class LastExam : Exam
 {
-private :
-	Test* test;
-	Exam* exam;
-public:
-	Question(Test* test) : test(test) {};
-	void setQ(char buffer[50])
-	{
-		test->set(buffer);
-	}
-	Question(Exam* exam) : exam(exam) {};
-	void setE(char buffer[50])
-	{
-		exam->set(buffer);
-	}
-};
-int main()
-{
+private:
+	Question* pointer;
 	char buffer[50];
-	Test test;
-	Question t(&test);
-	for (int i = 0; i < 1; i++)
+public:
+	LastExam(Question* pointer) : pointer(pointer) {};
+	LastExam()
 	{
-		gets_s(buffer);
-		t.setQ(buffer);
+		cout << "Constructor : Last Exam" << endl;
 	}
-	cout << "--------------" << endl;
-	test.print(buffer);
-	Exam exam;
-	Question e(&exam);
-	for (int i = 0; i < 1; i++)
+	~LastExam()
 	{
-		gets_s(buffer);
-		e.setE(buffer);
+		cout << "Destructor : Last Exam" << endl;
 	}
-	exam.print(buffer);
+	void addQuestionLastExam(char buffer[50])
+	{
+		pointer->setQuestion(buffer);
+	}
+	void getQuestionLastExam()
+	{
+		pointer->getQuestion();
+	}
+};
 
+	int main()
+	{
+		
+		char buffer[50];
+		Question quest;
+		Test test(&quest);
+		cout << "Enter Question : Test" << endl;
+		gets_s(buffer);
+		test.addquestion(buffer);
+		cout << "--------------" << endl;
+		test.getquestion();
 
-	system("pause");
-	
-}
+		Question qu;
+		Exam exam(&qu);
+		cout << "Enter Question : Exam" << endl;
+		gets_s(buffer);
+		exam.addQuestionExam(buffer);
+		cout << "--------------" << endl;
+		exam.getQuestionExam();
+
+		Question pointer;
+		LastExam lastexam(&pointer);
+		cout << "Enter Question : Last Exam" << endl;
+		gets_s(buffer);
+		lastexam.addQuestionLastExam(buffer);
+		cout << "--------------" << endl;
+		lastexam.getQuestionLastExam();
+		system("pause");
+
+	}

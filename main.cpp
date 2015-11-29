@@ -7,25 +7,36 @@ using namespace std;
 class Question
 {
 private:
-	char* text;
+	char text[50];
 public:
 	void setQuestion(char buffer[50])
 	{
-		this->text = buffer;
+		cout << "buffer :" << buffer << endl;
+		for (int i = 0; i <= 3; i++)
+		{
+			text[i] = (char)buffer;
+		}
 	}
-	void getQuestion()
+	void getQuestion(char buffer[50])
 	{
-		cout << "Your Question is a : " << this->text << endl;
+		cout << "Your Questions are : " << endl;
+		for (int i = 0; i <= 3; i++)
+		{
+			cout << text[i] << endl;
+		}
 	}
 };
+
 
 class Test
 {
 private:
 	Question* quest;
-	char buffer[50];
+	Question *Arr;
+	int size = 0;
+	int current = 0;
+	char array[250];
 public:
-
 	Test(Question* quest) : quest(quest) {};
 	Test()
 	{
@@ -37,14 +48,27 @@ public:
 	}
 	void addquestion(char buffer[50])
 	{
-		quest->setQuestion(buffer);
+		if (current <= size)
+		{
+			Arr[current].setQuestion(buffer);
+			current++;
+		}
+		else
+		{
+			cout << "ERROR" << endl;
+		}
 	}
-	void getquestion()
+	void getquestion(char buffer[50])
 	{
-		quest->getQuestion();
+		Arr[current].getQuestion(buffer);
+		current++;
+	}
+	void setSize(int s)
+	{
+		size = s;
 	}
 };
-class Exam : Test
+/*class Exam : Test
 {
 private:
 	Question* qu;
@@ -91,7 +115,7 @@ public:
 	{
 		pointer->getQuestion();
 	}
-};
+};*/
 
 	int main()
 	{
@@ -100,12 +124,16 @@ public:
 		Question quest;
 		Test test(&quest);
 		cout << "Enter Question : Test" << endl;
-		gets_s(buffer);
-		test.addquestion(buffer);
+		test.setSize(3);
+		for (int i = 0; i <= 3; i++)
+		{
+			gets_s(buffer);
+			test.addquestion(buffer);
+		}
 		cout << "--------------" << endl;
-		test.getquestion();
+		test.getquestion(buffer);
 
-		Question qu;
+	/*	Question qu;
 		Exam exam(&qu);
 		cout << "Enter Question : Exam" << endl;
 		gets_s(buffer);
@@ -119,7 +147,7 @@ public:
 		gets_s(buffer);
 		lastexam.addQuestionLastExam(buffer);
 		cout << "--------------" << endl;
-		lastexam.getQuestionLastExam();
+		lastexam.getQuestionLastExam();*/
 		system("pause");
 
 	}

@@ -7,23 +7,21 @@ using namespace std;
 class Question
 {
 private:
-	char text[50];
+	char *text;
 public:
-	void setQuestion(char buffer[50])
+	void setText(char *buffer)//
 	{
 		cout << "buffer :" << buffer << endl;
-		for (int i = 0; i <= 3; i++)
-		{
-			text[i] = (char)buffer;
-		}
+		text = buffer;
 	}
-	void getQuestion(char buffer[50])
+	char* getText()
 	{
-		cout << "Your Questions are : " << endl;
-		for (int i = 0; i <= 3; i++)
-		{
-			cout << text[i] << endl;
-		}
+		return text;
+	}
+	void Print()
+	{
+		cout << "Your Questions is : " << endl;
+		cout << text << endl;
 	}
 };
 
@@ -31,123 +29,166 @@ public:
 class Test
 {
 private:
-	Question* quest;
 	Question *Arr;
 	int size = 0;
 	int current = 0;
-	char array[250];
 public:
-	Test(Question* quest) : quest(quest) {};
 	Test()
 	{
-		cout << "Constructor : Test " << endl;
+		cout << "Default constructor : Test " << endl;
 	}
 	~Test()
 	{
 		cout << "Destructor : Test" << endl;
 	}
-	void addquestion(char buffer[50])
+	Test(int s)
+	{
+		cout << "Constructor : Test " << endl;
+		size = s;
+		Arr = new Question[size];
+	}
+	void addQuestion(char *buffer)
 	{
 		if (current <= size)
 		{
-			Arr[current].setQuestion(buffer);
+			Arr[current].setText(buffer);
 			current++;
 		}
 		else
 		{
 			cout << "ERROR" << endl;
+			abort();
 		}
 	}
-	void getquestion(char buffer[50])
+	void getquestion()
 	{
-		Arr[current].getQuestion(buffer);
-		current++;
+		for (int i = 0; i < current; i++)
+		Arr[i].Print();
 	}
 	void setSize(int s)
 	{
 		size = s;
 	}
 };
-/*class Exam : Test
+class Exam : Test
 {
 private:
-	Question* qu;
-	char buffer[50];
+	int size = 0;
+	int current = 0;
+	Question* Mass;
 public:
-	Exam(Question* qu) : qu(qu) {};
 	Exam()
 	{
+		cout << "Default constructor : Exam " << endl;
+	}
+	Exam(int s)
+	{
 		cout << "Constructor : Exam" << endl;
+		size = s;
+		Mass = new Question[size];
 	}
 	~Exam()
 	{
 		cout << "Destructor : Exam" << endl;
 	}
-	void addQuestionExam(char buffer[50])
+	void addQuestionExam(char* buffer)
 	{
-		qu->setQuestion(buffer);
+		if (current <= size)
+		{
+			Mass[current].setText(buffer);
+			current++;
+		}
+		else
+		{
+			cout << "ERROR" << endl;
+			abort();
+		}
 	}
 	void getQuestionExam()
 	{
-		qu->getQuestion();
+		for (int i = 0; i < current; i++)
+			Mass[i].Print();
+	}
+	void setSize(int s)
+	{
+		size = s;
 	}
 };
+
 class LastExam : Exam
 {
 private:
-	Question* pointer;
-	char buffer[50];
+	Question* Array;
+	int size = 0;
+	int current = 0;
 public:
-	LastExam(Question* pointer) : pointer(pointer) {};
+	void setSize(int s)
+	{
+		size = s;
+	}
 	LastExam()
 	{
+		cout << "Default constructor : Last Exam " << endl;
+	}
+	LastExam(int s)
+	{
 		cout << "Constructor : Last Exam" << endl;
+		size = s;
+		Array = new Question[size];
 	}
 	~LastExam()
 	{
 		cout << "Destructor : Last Exam" << endl;
 	}
-	void addQuestionLastExam(char buffer[50])
+	void addQuestionLastExam(char* buffer)
 	{
-		pointer->setQuestion(buffer);
+		if (current <= size)
+		{
+			Array[current].setText(buffer);
+			current++;
+		}
+		else
+		{
+			cout << "ERROR" << endl;
+			abort();
+		}
 	}
 	void getQuestionLastExam()
 	{
-		pointer->getQuestion();
+		for (int i = 0; i < current; i++)
+			Array[i].Print();
 	}
-};*/
+};
 
 	int main()
 	{
-		
-		char buffer[50];
-		Question quest;
-		Test test(&quest);
-		cout << "Enter Question : Test" << endl;
-		test.setSize(3);
-		for (int i = 0; i <= 3; i++)
+		Test T(3);
+		for (int i = 0; i < 3; i++)
 		{
-			gets_s(buffer);
-			test.addquestion(buffer);
+			char *str = new char[250];
+			cin.getline(str,250);
+			T.addQuestion(str);
 		}
-		cout << "--------------" << endl;
-		test.getquestion(buffer);
-
-	/*	Question qu;
-		Exam exam(&qu);
-		cout << "Enter Question : Exam" << endl;
-		gets_s(buffer);
-		exam.addQuestionExam(buffer);
-		cout << "--------------" << endl;
-		exam.getQuestionExam();
-
-		Question pointer;
-		LastExam lastexam(&pointer);
-		cout << "Enter Question : Last Exam" << endl;
-		gets_s(buffer);
-		lastexam.addQuestionLastExam(buffer);
-		cout << "--------------" << endl;
-		lastexam.getQuestionLastExam();*/
+		T.getquestion();
+		cout << "----------" << endl;
+		Exam E(3);
+		for (int i = 0; i < 3; i++)
+		{
+			char* str2 = new char[250];
+			cin.getline(str2, 250);
+			E.addQuestionExam(str2);
+		}
+		E.getQuestionExam();
+		cout << "----------" << endl;
+		LastExam LE(3);
+		for (int i = 0; i < 3; i++)
+		{
+			char* str3 = new char[250];
+			cin.getline(str3, 250);
+			LE.addQuestionLastExam(str3);
+		}
+		LE.getQuestionLastExam();
 		system("pause");
+		return 0;
 
 	}

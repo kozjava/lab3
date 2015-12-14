@@ -20,7 +20,7 @@ public:
 	}
 	void Print()
 	{
-		cout << "Your Questions is : " << endl;
+		cout << "Your Questions are : " << endl;
 		cout << text << endl;
 	}
 };
